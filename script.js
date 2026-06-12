@@ -262,13 +262,31 @@ zoekbalk.addEventListener("focus", function () {
     .forEach(function (term) {
       var item = document.createElement("div");
       item.classList.add("geschiedenis-item");
-      item.innerHTML = term;
-      item.onclick = function () {
+
+      var tekst = document.createElement("span");
+      tekst.innerHTML = term;
+      tekst.onclick = function () {
         window.open(
           "https://www.google.com/search?q=" + encodeURIComponent(term),
           "_self",
         );
       };
+
+      var kruis = document.createElement("span");
+      kruis.innerHTML = "×";
+      kruis.classList.add("geschiedenis-verwijder");
+      kruis.onclick = function (e) {
+        e.stopPropagation();
+        var g = JSON.parse(localStorage.getItem("zoekgeschiedenis")) || [];
+        g = g.filter(function (t) {
+          return t !== term;
+        });
+        localStorage.setItem("zoekgeschiedenis", JSON.stringify(g));
+        item.remove();
+      };
+
+      item.appendChild(tekst);
+      item.appendChild(kruis);
       geschiedenisBox.appendChild(item);
     });
   geschiedenisBox.style.display = "block";
