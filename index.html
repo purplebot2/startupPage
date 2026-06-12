@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <head>
+    <title>Lege tab</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
       rel="stylesheet"
@@ -15,6 +16,7 @@
   <body>
     <div id="klok"></div>
     <div id="datum"></div>
+    <div id="groet"></div>
     <div id="weer">
       <i id="weer-icoon" class="fa-solid fa-sun"></i>
       <span id="weer-tekst"></span>
@@ -23,14 +25,18 @@
       id="zoekform"
       action="https://www.google.com/search"
       method="GET"
-      target="_blank"
+      target="_self"
     >
-      <input
-        type="text"
-        name="q"
-        id="zoekbalk"
-        placeholder="Zoek op Google..."
-      />
+      <div>
+        <input
+          type="text"
+          name="q"
+          id="zoekbalk"
+          placeholder="Zoek op Google..."
+          autocomplete="off"
+        />
+        <div id="suggestie-box"></div>
+      </div>
     </form>
     <div id="wrapper">
       <div id="nieuweK" class="koppeling" onclick="newSnelkopeling()">+</div>

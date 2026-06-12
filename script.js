@@ -43,75 +43,79 @@ setInterval(updateDate, 1000);
 updateDate();
 
 function updateWeer() {
-  navigator.geolocation.getCurrentPosition(function (pos) {
-    var lat = pos.coords.latitude;
-    var lon = pos.coords.longitude;
-    var stad = "Antwerpen";
+  fetch("https://ipapi.co/json/")
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (locData) {
+      var stad = locData.city;
+      var lat = locData.latitude;
+      var lon = locData.longitude;
 
-    fetch("https://wttr.in/" + lat + "," + lon + "?format=j1")
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        var vertalingen = {
-          Sunny: "Zonnig",
-          Clear: "Helder",
-          "Partly Cloudy": "Half bewolkt",
-          Cloudy: "Bewolkt",
-          Overcast: "Zwaar bewolkt",
-          "Light Drizzle": "Nieselregen",
-          Drizzle: "Nieselregen",
-          "Drizzle And Rain": "Zachte regen",
-          "Light Drizzle And Rain": "Zachte regen",
-          "Light Rain": "Lichte regen",
-          Rain: "Regen",
-          "Heavy Rain": "Zware regen",
-          "Light Snow": "Lichte sneeuw",
-          Snow: "Sneeuw",
-          "Thundery Outbreaks Possible": "Onweer mogelijk",
-          Blizzard: "Sneeuwstorm",
-          Fog: "Mist",
-          "Light Rain Shower": "Lichte regenbui",
-          "Rain Shower": "Regenbui",
-          "Heavy Rain Shower": "Zware regenbui",
-          "Patchy Rain Nearby": "Plaatselijk regen",
-          "Patchy Light Rain": "Plaatselijk lichte regen",
-        };
-        var iconen = {
-          Sunny: "fa-sun",
-          Clear: "fa-moon",
-          "Partly Cloudy": "fa-cloud-sun",
-          Cloudy: "fa-cloud",
-          Overcast: "fa-cloud",
-          "Light Drizzle": "fa-cloud-rain",
-          Drizzle: "fa-cloud-rain",
-          "Drizzle And Rain": "fa-cloud-rain",
-          "Light Drizzle And Rain": "fa-cloud-rain",
-          "Light Rain": "fa-cloud-sun-rain",
-          Rain: "fa-cloud-rain",
-          "Heavy Rain": "fa-cloud-showers-heavy",
-          "Light Snow": "fa-snowflake",
-          Snow: "fa-snowflake",
-          "Thundery Outbreaks Possible": "fa-bolt",
-          Blizzard: "fa-snowflake",
-          Fog: "fa-smog",
-          "Light Rain Shower": "fa-cloud-sun-rain",
-          "Rain Shower": "fa-cloud-showers-heavy",
-          "Heavy Rain Shower": "fa-cloud-showers-heavy",
-          "Patchy Rain Nearby": "fa-cloud-sun-rain",
-          "Patchy Light Rain": "fa-cloud-sun-rain",
-        };
-        var temp = data.current_condition[0].temp_C;
-        var engelse = data.current_condition[0].weatherDesc[0].value
-          .split(",")[0]
-          .trim();
-        var beschrijving = vertalingen[engelse] || engelse;
-        var icoon = iconen[engelse] || "fa-temperature-half";
-        document.getElementById("weer-icoon").className = "fa-solid " + icoon;
-        document.getElementById("weer-tekst").innerHTML =
-          stad + " · " + temp + "°C · " + beschrijving;
-      });
-  });
+      fetch("https://wttr.in/" + lat + "," + lon + "?format=j1")
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          var vertalingen = {
+            Sunny: "Zonnig",
+            Clear: "Helder",
+            "Partly Cloudy": "Half bewolkt",
+            Cloudy: "Bewolkt",
+            Overcast: "Zwaar bewolkt",
+            "Light Drizzle": "Nieselregen",
+            Drizzle: "Nieselregen",
+            "Drizzle And Rain": "Zachte regen",
+            "Light Drizzle And Rain": "Zachte regen",
+            "Light Rain": "Lichte regen",
+            Rain: "Regen",
+            "Heavy Rain": "Zware regen",
+            "Light Snow": "Lichte sneeuw",
+            Snow: "Sneeuw",
+            "Thundery Outbreaks Possible": "Onweer mogelijk",
+            Blizzard: "Sneeuwstorm",
+            Fog: "Mist",
+            "Light Rain Shower": "Lichte regenbui",
+            "Rain Shower": "Regenbui",
+            "Heavy Rain Shower": "Zware regenbui",
+            "Patchy Rain Nearby": "Plaatselijk regen",
+            "Patchy Light Rain": "Plaatselijk lichte regen",
+          };
+          var iconen = {
+            Sunny: "fa-sun",
+            Clear: "fa-moon",
+            "Partly Cloudy": "fa-cloud-sun",
+            Cloudy: "fa-cloud",
+            Overcast: "fa-cloud",
+            "Light Drizzle": "fa-cloud-rain",
+            Drizzle: "fa-cloud-rain",
+            "Drizzle And Rain": "fa-cloud-rain",
+            "Light Drizzle And Rain": "fa-cloud-rain",
+            "Light Rain": "fa-cloud-sun-rain",
+            Rain: "fa-cloud-rain",
+            "Heavy Rain": "fa-cloud-showers-heavy",
+            "Light Snow": "fa-snowflake",
+            Snow: "fa-snowflake",
+            "Thundery Outbreaks Possible": "fa-bolt",
+            Blizzard: "fa-snowflake",
+            Fog: "fa-smog",
+            "Light Rain Shower": "fa-cloud-sun-rain",
+            "Rain Shower": "fa-cloud-showers-heavy",
+            "Heavy Rain Shower": "fa-cloud-showers-heavy",
+            "Patchy Rain Nearby": "fa-cloud-sun-rain",
+            "Patchy Light Rain": "fa-cloud-sun-rain",
+          };
+          var temp = data.current_condition[0].temp_C;
+          var engelse = data.current_condition[0].weatherDesc[0].value
+            .split(",")[0]
+            .trim();
+          var beschrijving = vertalingen[engelse] || engelse;
+          var icoon = iconen[engelse] || "fa-temperature-half";
+          document.getElementById("weer-icoon").className = "fa-solid " + icoon;
+          document.getElementById("weer-tekst").innerHTML =
+            stad + " · " + temp + "°C · " + beschrijving;
+        });
+    });
 }
 
 updateWeer();
@@ -133,7 +137,7 @@ function laadKoppelingen() {
       snelK.appendChild(img);
       (function (el, index, l) {
         el.onclick = function () {
-          window.open(l, "_blank");
+          window.open(l, "_self");
         };
         el.oncontextmenu = function (e) {
           e.preventDefault();
@@ -172,7 +176,7 @@ function newSnelkopeling() {
       localStorage.setItem("teller", teller);
       (function (el, index, l) {
         el.onclick = function () {
-          window.open(l, "_blank");
+          window.open(l, "_self");
         };
         el.oncontextmenu = function (e) {
           e.preventDefault();
@@ -194,3 +198,53 @@ function newSnelkopeling() {
 }
 
 laadKoppelingen();
+
+function updateGroet() {
+  var naam = localStorage.getItem("naam");
+  if (!naam) {
+    naam = prompt("Wat is je naam?");
+    localStorage.setItem("naam", naam);
+  }
+
+  var ochtend = [
+    "Good morning <i class='fa-solid fa-sun'></i>",
+    "Rise and shine <i class='fa-solid fa-cloud-sun'></i>",
+    "Morning <i class='fa-solid fa-mug-hot'></i>",
+  ];
+  var middag = [
+    "Good afternoon <i class='fa-solid fa-utensils'></i>",
+    "Hey <i class='fa-solid fa-hand-wave'></i>",
+    "Afternoon <i class='fa-solid fa-sun'></i>",
+  ];
+  var namiddag = [
+    "Good afternoon <i class='fa-solid fa-clock'></i>",
+    "Almost done for today <i class='fa-solid fa-flag-checkered'></i>",
+    "Hey <i class='fa-solid fa-bolt'></i>",
+  ];
+  var avond = [
+    "Good evening <i class='fa-solid fa-moon'></i>",
+    "Evening <i class='fa-solid fa-stars'></i>",
+    "Hey night owl <i class='fa-solid fa-crow'></i>",
+  ];
+  var nacht = [
+    "Still awake? <i class='fa-solid fa-bed'></i>",
+    "Go to sleep <i class='fa-solid fa-moon'></i>",
+    "Late night grind <i class='fa-solid fa-fire'></i>",
+  ];
+
+  var now = new Date();
+  var h = now.getHours();
+  var lijst;
+
+  if (h >= 6 && h < 12) lijst = ochtend;
+  else if (h >= 12 && h < 14) lijst = middag;
+  else if (h >= 14 && h < 18) lijst = namiddag;
+  else if (h >= 18 && h < 23) lijst = avond;
+  else lijst = nacht;
+
+  var groet = lijst[Math.floor(Math.random() * lijst.length)];
+  document.getElementById("groet").innerHTML = groet + ", " + naam;
+}
+
+updateGroet();
+glitchHover("groet");
