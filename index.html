@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="Glitch/glitch.js"></script>
+  </head>
+  <body>
+    <div id="klok"></div>
+    <div id="datum"></div>
+    <div id="weer">
+      <i id="weer-icoon" class="fa-solid fa-sun"></i>
+      <span id="weer-tekst"></span>
+    </div>
+    <form
+      id="zoekform"
+      action="https://www.google.com/search"
+      method="GET"
+      target="_blank"
+    >
+      <input
+        type="text"
+        name="q"
+        id="zoekbalk"
+        placeholder="Zoek op Google..."
+      />
+    </form>
+    <div id="wrapper">
+      <div id="nieuweK" class="koppeling" onclick="newSnelkopeling()">+</div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

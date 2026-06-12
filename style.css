@@ -1,0 +1,77 @@
+body {
+  background-color: #0a1514;
+  color: #b8d4d1;
+  justify-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 250px;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+}
+
+#klok {
+  font-size: 700%;
+  margin: 0;
+  line-height: 1;
+}
+
+#datum {
+  font-size: 180%;
+  color: #2e4845;
+  margin-top: -5px;
+  line-height: 1.4;
+}
+
+#weer {
+  border: 2px solid #1a2e2c;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 10px;
+  color: #61a69c;
+  margin-top: 20px;
+  background-color: #0d1a19;
+}
+#weer-icoon {
+  color: transparent;
+  -webkit-text-stroke: 1px #61a69c;
+  padding-left: 10px;
+}
+#zoekform {
+  margin-top: 30px;
+}
+#zoekbalk {
+  width: 400px;
+  padding: 12px 20px;
+  border-radius: 50px;
+  border: 2px solid #1a2e2c;
+  background-color: #0d1a19;
+  color: #2e4845;
+  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  outline: none;
+}
+#zoekbalk:focus {
+  border-color: #61a69c;
+}
+.koppeling {
+  border: 2px solid #1a2e2c;
+  width: 30px;
+  font-size: 130%;
+  padding: 10px;
+  border-radius: 10px;
+  color: #61a69c;
+  margin-top: 20px;
+  background-color: #0d1a19;
+  cursor: pointer;
+}
+#wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  width: 350px;
+}
+#nieuweK {
+  order: 9999;
+}
