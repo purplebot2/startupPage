@@ -248,3 +248,42 @@ function updateGroet() {
 
 updateGroet();
 glitchHover("groet");
+
+var zoekbalk = document.getElementById("zoekbalk");
+var geschiedenisBox = document.getElementById("zoek-geschiedenis");
+
+zoekbalk.addEventListener("focus", function () {
+  var geschiedenis = JSON.parse(localStorage.getItem("zoekgeschiedenis")) || [];
+  if (geschiedenis.length === 0) return;
+  geschiedenisBox.innerHTML = "";
+  geschiedenis
+    .slice(-5)
+    .reverse()
+    .forEach(function (term) {
+      var item = document.createElement("div");
+      item.classList.add("geschiedenis-item");
+      item.innerHTML = term;
+      item.onclick = function () {
+        window.open(
+          "https://www.google.com/search?q=" + encodeURIComponent(term),
+          "_self",
+        );
+      };
+      geschiedenisBox.appendChild(item);
+    });
+  geschiedenisBox.style.display = "block";
+});
+
+zoekbalk.addEventListener("blur", function () {
+  setTimeout(function () {
+    geschiedenisBox.style.display = "none";
+  }, 200);
+});
+
+document.getElementById("zoekform").addEventListener("submit", function () {
+  var term = zoekbalk.value.trim();
+  if (!term) return;
+  var geschiedenis = JSON.parse(localStorage.getItem("zoekgeschiedenis")) || [];
+  geschiedenis.push(term);
+  localStorage.setItem("zoekgeschiedenis", JSON.stringify(geschiedenis));
+});
