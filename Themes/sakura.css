@@ -1,0 +1,21 @@
+:root {
+  --bg-page: #1a0a0f;
+  --bg-card: #2d1018;
+  --bg-hover: #3d1520;
+  --text-main: #ffd5c8;
+  --text-sub: #a05060;
+  --accent: #ff7a80;
+  --border: #5a1828;
+}
+
+body {
+  background-color: var(--bg-page);
+  font-family: "Zen Kaku Gothic New", sans-serif;
+}
+
+#weer,
+.koppeling,
+#zoekbalk,
+#zoek-geschiedenis {
+  border-radius: 20px;
+}

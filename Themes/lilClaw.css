@@ -1,0 +1,37 @@
+:root {
+  --bg-page: #0d0d1a;
+  --bg-card: #16162a;
+  --bg-hover: #1e1e35;
+  --text-main: #b0a0d0;
+  --text-sub: #504080;
+  --accent: #c0207a;
+  --border: #4a2d6e;
+}
+body {
+  background-color: var(--bg-page);
+  font-family: "Press Start 2P", monospace;
+}
+
+#weer {
+  padding: 14px 24px;
+  border-radius: 4px;
+}
+
+#weer,
+.koppeling,
+#zoekbalk,
+#zoek-geschiedenis {
+  border-radius: 0px;
+}
+#weer {
+  padding: 14px 24px;
+
+  margin-top: 30px;
+}
+#datum {
+  margin-top: 10px;
+}
+
+#groet {
+  margin-top: 10px;
+}

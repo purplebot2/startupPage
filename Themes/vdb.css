@@ -1,0 +1,21 @@
+:root {
+  --bg-page: #121212;
+  --bg-card: #1c1c1c;
+  --bg-hover: #242424;
+  --text-main: #bcb9b2;
+  --text-sub: #5a5750;
+  --accent: #fac118;
+  --border: #2a2a2a;
+}
+
+body {
+  background-color: var(--bg-page);
+  font-family: "Inter", sans-serif;
+}
+
+#weer,
+.koppeling,
+#zoekbalk,
+#zoek-geschiedenis {
+  border-radius: 10px;
+}

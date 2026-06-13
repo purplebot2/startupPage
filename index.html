@@ -1,6 +1,14 @@
 <!doctype html>
 <html>
   <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
     <title>Lege tab</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
@@ -11,9 +19,17 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" id="theme-link" />
     <script src="Glitch/glitch.js"></script>
   </head>
   <body>
+    <select id="theme-dropdown">
+      <option value="Q-ocean">Q-ocean</option>
+      <option value="sakura">Sakura</option>
+      <option value="lilClaw">Arcade</option>
+      <option value="vdb-theme">VDB Theme</option>
+    </select>
+
     <div id="klok"></div>
     <div id="datum"></div>
     <div id="groet"></div>
@@ -41,6 +57,7 @@
     <div id="wrapper">
       <div id="nieuweK" class="koppeling" onclick="newSnelkopeling()">+</div>
     </div>
+    <script src="theme.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
