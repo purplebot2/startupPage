@@ -8,51 +8,23 @@ function updateKlok() {
 setInterval(updateKlok, 1000);
 updateKlok();
 
-function updateDate() {
-  var dagen = [
-    "Zondag",
-    "Maandag",
-    "Dinsdag",
-    "Woensdag",
-    "Donderdag",
-    "Vrijdag",
-    "Zaterdag",
-  ];
-  var maanden = [
-    "Januari",
-    "Februari",
-    "Maart",
-    "April",
-    "Mei",
-    "Juni",
-    "Juli",
-    "Augustus",
-    "September",
-    "Oktober",
-    "November",
-    "December",
-  ];
-  var nowD = new Date();
-  var d = dagen[nowD.getDay()].toUpperCase();
-  var n = nowD.getDate();
-  var m = maanden[nowD.getMonth()].toUpperCase();
-  document.getElementById("datum").innerHTML = d + " " + n + " " + m;
-}
-
-setInterval(updateDate, 1000);
-updateDate();
-
 function updateWeer() {
-  fetch("https://freeipapi.com/api/json")
+  fetch("https://api.ipify.org?format=json")
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (ipData) {
+      return fetch("https://ipapi.co/" + ipData.ip + "/json/");
+    })
     .then(function (response) {
       return response.json();
     })
     .then(function (locData) {
-      var stad = locData.cityName;
+      var stad = locData.city;
       var lat = locData.latitude;
       var lon = locData.longitude;
 
-      fetch("https://wttr.in/" + lat + "," + lon + "?format=j1&cors=1")
+      fetch("https://wttr.in/" + lat + "," + lon + "?format=j1")
         .then(function (response) {
           return response.json();
         })
