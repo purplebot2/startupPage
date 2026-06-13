@@ -52,7 +52,7 @@ function updateWeer() {
       var lat = locData.latitude;
       var lon = locData.longitude;
 
-      fetch("https://wttr.in/" + lat + "," + lon + "?format=j1")
+      fetch("https://wttr.in/" + lat + "," + lon + "?format=j1&cors=1")
         .then(function (response) {
           return response.json();
         })
