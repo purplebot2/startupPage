@@ -43,7 +43,7 @@ setInterval(updateDate, 1000);
 updateDate();
 
 function updateWeer() {
-  fetch("https://ipapi.co/json/")
+  fetch("https://ipwho.is/")
     .then(function (response) {
       return response.json();
     })
