@@ -43,12 +43,12 @@ setInterval(updateDate, 1000);
 updateDate();
 
 function updateWeer() {
-  fetch("https://ipwho.is/")
+  fetch("https://freeipapi.com/api/json")
     .then(function (response) {
       return response.json();
     })
     .then(function (locData) {
-      var stad = locData.city;
+      var stad = locData.cityName;
       var lat = locData.latitude;
       var lon = locData.longitude;
 

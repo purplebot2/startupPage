@@ -13,5 +13,9 @@ dropdown.addEventListener("change", function () {
 });
 
 function setTheme(theme) {
-  themeLink.href = "Themes/" + theme + ".css";
+  if (theme === "Q-ocean") {
+    themeLink.href = "";
+  } else {
+    themeLink.href = "Themes/" + theme + ".css";
+  }
 }
