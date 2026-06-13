@@ -7,87 +7,98 @@ function updateKlok() {
 
 setInterval(updateKlok, 1000);
 updateKlok();
-
 function updateWeer() {
-  fetch("https://api.ipify.org?format=json")
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (ipData) {
-      return fetch("https://ipapi.co/" + ipData.ip + "/json/");
-    })
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (locData) {
-      var stad = locData.city;
-      var lat = locData.latitude;
-      var lon = locData.longitude;
+  navigator.geolocation.getCurrentPosition(function (pos) {
+    var lat = pos.coords.latitude;
+    var lon = pos.coords.longitude;
 
-      fetch("https://wttr.in/" + lat + "," + lon + "?format=j1")
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          var vertalingen = {
-            Sunny: "Zonnig",
-            Clear: "Helder",
-            "Partly Cloudy": "Half bewolkt",
-            Cloudy: "Bewolkt",
-            Overcast: "Zwaar bewolkt",
-            "Light Drizzle": "Nieselregen",
-            Drizzle: "Nieselregen",
-            "Drizzle And Rain": "Zachte regen",
-            "Light Drizzle And Rain": "Zachte regen",
-            "Light Rain": "Lichte regen",
-            Rain: "Regen",
-            "Heavy Rain": "Zware regen",
-            "Light Snow": "Lichte sneeuw",
-            Snow: "Sneeuw",
-            "Thundery Outbreaks Possible": "Onweer mogelijk",
-            Blizzard: "Sneeuwstorm",
-            Fog: "Mist",
-            "Light Rain Shower": "Lichte regenbui",
-            "Rain Shower": "Regenbui",
-            "Heavy Rain Shower": "Zware regenbui",
-            "Patchy Rain Nearby": "Plaatselijk regen",
-            "Patchy Light Rain": "Plaatselijk lichte regen",
-          };
-          var iconen = {
-            Sunny: "fa-sun",
-            Clear: "fa-moon",
-            "Partly Cloudy": "fa-cloud-sun",
-            Cloudy: "fa-cloud",
-            Overcast: "fa-cloud",
-            "Light Drizzle": "fa-cloud-rain",
-            Drizzle: "fa-cloud-rain",
-            "Drizzle And Rain": "fa-cloud-rain",
-            "Light Drizzle And Rain": "fa-cloud-rain",
-            "Light Rain": "fa-cloud-sun-rain",
-            Rain: "fa-cloud-rain",
-            "Heavy Rain": "fa-cloud-showers-heavy",
-            "Light Snow": "fa-snowflake",
-            Snow: "fa-snowflake",
-            "Thundery Outbreaks Possible": "fa-bolt",
-            Blizzard: "fa-snowflake",
-            Fog: "fa-smog",
-            "Light Rain Shower": "fa-cloud-sun-rain",
-            "Rain Shower": "fa-cloud-showers-heavy",
-            "Heavy Rain Shower": "fa-cloud-showers-heavy",
-            "Patchy Rain Nearby": "fa-cloud-sun-rain",
-            "Patchy Light Rain": "fa-cloud-sun-rain",
-          };
-          var temp = data.current_condition[0].temp_C;
-          var engelse = data.current_condition[0].weatherDesc[0].value
-            .split(",")[0]
-            .trim();
-          var beschrijving = vertalingen[engelse] || engelse;
-          var icoon = iconen[engelse] || "fa-temperature-half";
-          document.getElementById("weer-icoon").className = "fa-solid " + icoon;
-          document.getElementById("weer-tekst").innerHTML =
-            stad + " · " + temp + "°C · " + beschrijving;
-        });
-    });
+    fetch(
+      "https://nominatim.openstreetmap.org/reverse?lat=" +
+        lat +
+        "&lon=" +
+        lon +
+        "&format=json&accept-language=nl",
+    )
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (locData) {
+        var stad =
+          locData.address.city ||
+          locData.address.town ||
+          locData.address.village;
+
+        fetch(
+          "https://api.open-meteo.com/v1/forecast?latitude=" +
+            lat +
+            "&longitude=" +
+            lon +
+            "&current_weather=true",
+        )
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            var temp = Math.round(data.current_weather.temperature);
+            var code = data.current_weather.weathercode;
+
+            var vertalingen = {
+              0: "Helder",
+              1: "Overwegend helder",
+              2: "Half bewolkt",
+              3: "Bewolkt",
+              45: "Mist",
+              48: "Mist",
+              51: "Lichte motregen",
+              53: "Motregen",
+              55: "Zware motregen",
+              61: "Lichte regen",
+              63: "Regen",
+              65: "Zware regen",
+              71: "Lichte sneeuw",
+              73: "Sneeuw",
+              75: "Zware sneeuw",
+              80: "Lichte regenbui",
+              81: "Regenbui",
+              82: "Zware regenbui",
+              95: "Onweer",
+              96: "Onweer met hagel",
+              99: "Zwaar onweer",
+            };
+
+            var iconen = {
+              0: "fa-sun",
+              1: "fa-sun",
+              2: "fa-cloud-sun",
+              3: "fa-cloud",
+              45: "fa-smog",
+              48: "fa-smog",
+              51: "fa-cloud-rain",
+              53: "fa-cloud-rain",
+              55: "fa-cloud-rain",
+              61: "fa-cloud-sun-rain",
+              63: "fa-cloud-rain",
+              65: "fa-cloud-showers-heavy",
+              71: "fa-snowflake",
+              73: "fa-snowflake",
+              75: "fa-snowflake",
+              80: "fa-cloud-sun-rain",
+              81: "fa-cloud-showers-heavy",
+              82: "fa-cloud-showers-heavy",
+              95: "fa-bolt",
+              96: "fa-bolt",
+              99: "fa-bolt",
+            };
+
+            var beschrijving = vertalingen[code] || "Onbekend";
+            var icoon = iconen[code] || "fa-temperature-half";
+            document.getElementById("weer-icoon").className =
+              "fa-solid " + icoon;
+            document.getElementById("weer-tekst").innerHTML =
+              stad + " · " + temp + "°C · " + beschrijving;
+          });
+      });
+  });
 }
 
 updateWeer();
